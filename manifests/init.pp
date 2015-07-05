@@ -5,16 +5,14 @@ class mac_firewall ($mode='on') {
 
   case $mode {
     'off': {
-      if $curr_state == 'off' {notice('mac firewall already off')} 
-      else {
+      if $curr_state != 'off' {
         exec { 'mac firewall off':
           command => '/usr/bin/defaults write /Library/Preferences/com.apple.alf globalstate -int 0',
         }
       }
     }
     'on': {
-      if $curr_state == 'on' {notice('mac firewall already on (not blockall)')} 
-      else {
+      if $curr_state != 'on' { 
         exec { 'mac firewall on (not blockall)':
           command => '/usr/bin/defaults write /Library/Preferences/com.apple.alf globalstate -int 1',
         } ->
@@ -24,8 +22,7 @@ class mac_firewall ($mode='on') {
       }
     } 
     'stealthmode': {
-      if $curr_state == 'stealthmode' {notice('mac firewall already stealthmode')} 
-      else {
+      if $curr_state != 'stealthmode' {
         exec { 'mac firewall on (not blockall)':
           command => '/usr/bin/defaults write /Library/Preferences/com.apple.alf globalstate -int 1',
         } ->
@@ -35,8 +32,7 @@ class mac_firewall ($mode='on') {
       }
     }
     'blockall': {
-      if $curr_state == 'blockall' {notice('mac firewall already blockall')} 
-      else {
+      if $curr_state != 'blockall' {
         exec { 'mac firewall blockall on':
           command => '/usr/bin/defaults write /Library/Preferences/com.apple.alf globalstate -int 2',
         }
