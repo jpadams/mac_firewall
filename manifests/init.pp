@@ -14,11 +14,6 @@ class mac_firewall ($mode='on') {
     }
     'on': {
       if $curr_state == 'on' {notice('mac firewall already on (not blockall)')} 
-      elsif $curr_state == 'stealthmode' {
-        exec { 'mac firewall stealthmode off':
-          command => '/usr/libexec/ApplicationFirewall/socketfilterfw --setstealthmode off',
-        }
-      } 
       else {
         exec { 'mac firewall on (not blockall)':
           command => '/usr/bin/defaults write /Library/Preferences/com.apple.alf globalstate -int 1',
@@ -30,11 +25,6 @@ class mac_firewall ($mode='on') {
     } 
     'stealthmode': {
       if $curr_state == 'stealthmode' {notice('mac firewall already stealthmode')} 
-      elsif $curr_state == 'on' {
-        exec { 'mac firewall stealthmode on':
-          command => '/usr/libexec/ApplicationFirewall/socketfilterfw --setstealthmode on',
-        }
-      }
       else {
         exec { 'mac firewall on (not blockall)':
           command => '/usr/bin/defaults write /Library/Preferences/com.apple.alf globalstate -int 1',
