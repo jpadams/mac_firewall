@@ -13,7 +13,7 @@ class mac_firewall ($mode='on') {
       }
     }
     'on': {
-      if $curr_state == 'on' {notice('mac firewall already on')} 
+      if $curr_state == 'on' {notice('mac firewall already on (not blockall)')} 
       elsif $curr_state == 'stealthmode' {
         exec { 'mac firewall stealthmode off':
           command => '/usr/libexec/ApplicationFirewall/socketfilterfw --setstealthmode off',
